@@ -1,0 +1,116 @@
+TP5 - Blockchain attack simulation
+difficulty 3, block reward 50 coins
+
+=== 1. P2P network: broadcast, fork and longest-chain reorg ===
+after 4 honest rounds, every node has the same chain:
+  Alice ->  height 4 tip 0008849b61a731fb
+   #1 PoW by Carol nonce 1380 hash 000504f756f3eeea
+     tx tx 1
+   #2 PoW by Alice nonce 13927 hash 00073cdd57fa53cb
+     tx tx 2
+   #3 PoW by Alice nonce 1017 hash 0004b3345288a86e
+     tx tx 3
+   #4 PoW by Alice nonce 939 hash 0008849b61a731fb
+     tx tx 4
+  Bob ->  height 4 tip 0008849b61a731fb
+   #1 PoW by Carol nonce 1380 hash 000504f756f3eeea
+     tx tx 1
+   #2 PoW by Alice nonce 13927 hash 00073cdd57fa53cb
+     tx tx 2
+   #3 PoW by Alice nonce 1017 hash 0004b3345288a86e
+     tx tx 3
+   #4 PoW by Alice nonce 939 hash 0008849b61a731fb
+     tx tx 4
+  Carol ->  height 4 tip 0008849b61a731fb
+   #1 PoW by Carol nonce 1380 hash 000504f756f3eeea
+     tx tx 1
+   #2 PoW by Alice nonce 13927 hash 00073cdd57fa53cb
+     tx tx 2
+   #3 PoW by Alice nonce 1017 hash 0004b3345288a86e
+     tx tx 3
+   #4 PoW by Alice nonce 939 hash 0008849b61a731fb
+     tx tx 4
+  chain valid: yes
+
+Carol has been mining a private fork from block 2:
+  public chain: height 4 tip 0008849b61a731fb
+  private fork: height 5 tip 0009418eee1c991a
+  both chains are valid: yes
+
+Carol broadcasts the fork; nodes follow the longest chain:
+  Alice REORGED -> height 5 tip 0009418eee1c991a
+  Bob REORGED -> height 5 tip 0009418eee1c991a
+  Carol REORGED -> height 5 tip 0009418eee1c991a
+  transactions from old blocks 3 and 4 are dropped (orphaned).
+
+=== 2. 51% attack on proof of work (hashrate) ===
+  A 51% miner can outrun the honest chain and rewrite history.
+  attacker controls 51% of computing power (PoW)
+  after 100 rounds: attacker 51 blocks, honest 49 blocks (+1 victim block)
+  public height 52, attacker height 53
+  verdict: SUCCESS - longer fork replaces the public chain
+  49% is not enough over the same number of rounds:
+  attacker controls 49% of computing power (PoW)
+  after 100 rounds: attacker 49 blocks, honest 51 blocks (+1 victim block)
+  public height 54, attacker height 51
+  verdict: FAILED - attacker fork is not longer
+
+=== 3. 51% attack on proof of stake (amount/stake) ===
+  Same idea, but the weight is the stake instead of the hashrate.
+  attacker controls 51% of stake (PoS)
+  after 100 rounds: attacker 51 blocks, honest 49 blocks (+1 victim block)
+  public height 52, attacker height 53
+  verdict: SUCCESS - longer fork replaces the public chain
+  45% stake cannot take over the longest chain:
+  attacker controls 45% of stake (PoS)
+  after 100 rounds: attacker 45 blocks, honest 55 blocks (+1 victim block)
+  public height 58, attacker height 47
+  verdict: FAILED - attacker fork is not longer
+
+=== 4. Double spending with a 51%+ attacker ===
+  1. Alice pays the merchant: Alice->Merchant:10 (payment)
+     The payment is in public block 3 and the merchant ships.
+  2. Alice (60% hashrate) secretly mines a fork from block 2
+     with a conflicting spend: Alice->Mallory:10 (same coins)
+  3. Attack result: her fork is longer, the network reorgs
+  4. Payment still confirmed after the reorg: no
+     Conflicting spend in canonical chain: yes
+     The merchant lost the goods and the payment was undone.
+
+=== 5. Selfish mining (withholding blocks on a private fork) ===
+  attacker hashrate: 40%
+  canonical blocks: Mallory 44, honest 61
+  honest blocks orphaned by the attacker: 15
+  attacker share of the canonical chain: 41.9%
+  With less than 50% hashrate, withholding still lets the
+  attacker steal a larger share by making honest work orphaned.
+
+=== 6. Block withholding in a mining pool ===
+  Pool members: Alice 25%, Bob 25%, Carol 25%, Mallory 25%.
+  Mallory still sends partial shares but withholds full blocks.
+
+  normal pool:
+    blocks accepted by the network: 100
+    Alice: found 25, accepted 25
+    Bob: found 21, accepted 21
+    Carol: found 30, accepted 30
+    Mallory: found 24, accepted 24
+    pool revenue: 5000.0 coins
+    Mallory payout (paid on shares): 1250.0 coins
+    honest members payout: 3750.0 coins
+
+  withholding attack:
+    blocks accepted by the network: 76
+    Alice: found 25, accepted 25
+    Bob: found 21, accepted 21
+    Carol: found 30, accepted 30
+    Mallory: found 24, accepted 0
+    pool revenue: 3800.0 coins
+    Mallory payout (paid on shares): 950.0 coins
+    honest members payout: 2850.0 coins
+
+  Mallory's withheld blocks never reach the chain.
+  Pool revenue drops by 24.0%: a rival pool can use this to damage a competitor
+  while still receiving share-based payouts.
+
+Done.
