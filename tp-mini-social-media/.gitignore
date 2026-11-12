@@ -1,0 +1,12 @@
+node_modules/
+dist/
+out/
+cache/
+broadcast/
+.env
+.env.local
+.deployer/
+.wallets/
+
+# Local notes, not part of the repo
+GUIDE.md

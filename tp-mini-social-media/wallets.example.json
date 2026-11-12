@@ -1,0 +1,20 @@
+[
+  {
+    "name": "wallet-1",
+    "role": "use",
+    "privateKey": "0xYOUR_PRIVATE_KEY",
+    "address": "0xYOUR_ADDRESS"
+  },
+  {
+    "name": "wallet-2",
+    "role": "use",
+    "privateKey": "0xYOUR_PRIVATE_KEY",
+    "address": "0xYOUR_ADDRESS"
+  },
+  {
+    "name": "deployer",
+    "role": "deploy",
+    "privateKey": "0xYOUR_PRIVATE_KEY",
+    "address": "0xYOUR_ADDRESS"
+  }
+]

@@ -1,0 +1,270 @@
+:root {
+  --gap: 8px;
+  --gap-lg: 16px;
+  --gap-xl: 24px;
+  --radius: 6px;
+  --border: #d4d4d4;
+  --muted: #6b7280;
+  --text: #1f2328;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 48px 20px;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text);
+  background: #fff;
+}
+
+main {
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+/* Header */
+
+header {
+  margin-bottom: var(--gap-xl);
+}
+
+h1 {
+  margin: 0 0 2px;
+  font-size: 24px;
+  line-height: 1.25;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* Toolbar */
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap);
+  margin-bottom: var(--gap-lg);
+}
+
+.account {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.label {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #eef1f4;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.hint {
+  margin: -8px 0 var(--gap-lg);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.hint a {
+  color: inherit;
+}
+
+/* Buttons */
+
+.button {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.4;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  border-color: #9ca3af;
+  background: #f9fafb;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 1px;
+}
+
+.button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.button.primary {
+  border-color: var(--text);
+  background: var(--text);
+  color: #fff;
+}
+
+.button.primary:hover:not(:disabled) {
+  border-color: #000;
+  background: #000;
+}
+
+.button.wallet {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wallet-icon {
+  display: block;
+  flex: none;
+  border-radius: 3px;
+}
+
+/* Composer */
+
+.composer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.composer textarea {
+  width: 100%;
+  min-height: 84px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: inherit;
+  font: inherit;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.composer textarea::placeholder {
+  color: #9ca3af;
+}
+
+.composer textarea:focus {
+  border-color: var(--text);
+  outline: 2px solid var(--text);
+  outline-offset: -1px;
+}
+
+.composer textarea:disabled {
+  background: #f9fafb;
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+.composer-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap);
+}
+
+.counter {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+/* Status */
+
+.status {
+  min-height: 18px;
+  margin: var(--gap-lg) 0 0;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+/* Posts */
+
+hr {
+  margin: var(--gap-xl) 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+
+h2 {
+  display: flex;
+  align-items: baseline;
+  gap: var(--gap);
+  margin: 0 0 var(--gap);
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.count {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.posts {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.posts li {
+  padding: var(--gap-lg) 0;
+  border-bottom: 1px solid #ececec;
+}
+
+.posts li:first-child {
+  border-top: 1px solid #ececec;
+}
+
+.post-message,
+.post-meta {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.post-message {
+  white-space: pre-wrap;
+}
+
+.post-meta {
+  margin-top: 4px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.empty {
+  margin: 0;
+  padding: var(--gap-lg) 0;
+  color: var(--muted);
+  font-size: 14px;
+}

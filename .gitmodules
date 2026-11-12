@@ -1,0 +1,3 @@
+[submodule "tp-mini-social-media/lib/forge-std"]
+	path = tp-mini-social-media/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
